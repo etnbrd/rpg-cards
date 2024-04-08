@@ -1,12 +1,18 @@
 .card {
-    border: 2mm solid;
     box-sizing: border-box;
     position: relative;
     display: flex;
     flex-direction: column;
-    font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+    font-family: "EB Garamond", 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
     font-size: 8pt;
     overflow: hidden;
+
+    outline: 1px solid grey;
+    box-shadow: 0 5px 10px 0 grey;
+}
+
+.card-header, .card-element {
+    padding: 0 4mm;
 }
 
 .card.rounded-corners {
@@ -14,11 +20,6 @@
 }
 
 .card-content-container {
-    padding:2mm;
-    padding-top:1mm;
-    border-radius: 2mm;
-    margin-top:0px;
-    background-color: white;
     border-color: inherit;
     display: flex;
     flex-direction: column;
@@ -33,6 +34,7 @@
     margin: 3mm;
     flex: 1;
     display: flex;
+    position: relative;
 }
 
 .card-back-inner {
@@ -58,10 +60,61 @@
     background-size: contain;
 }
 
+.card-back-corner-icon {
+    font-family: 'Chomsky';
+    font-size: 44pt;
+    color: white;
+    position: absolute;
+    line-height: 0.66em;
+}
+
+.card-back-corner-icon:first-child {
+    top: 0em;
+    left: 0em;
+}
+
+.card-back-corner-icon:last-child {
+    bottom: 0em;
+    right: 0em;
+    transform: rotate(180deg);
+}
+
 .card-header {
     display: flex;
+    align-items: end;
 }
 .card-header > * {
+    flex-grow: 1;
+}
+
+/* The last item before a description line */
+.card-content-container *:not(.card-description-line):has(+ .card-description-line) {
+    padding-bottom: 4mm;
+}
+
+.card-content-container > .card-description-line {
+    padding-top: 4mm;
+}
+.card-content-container > .card-description-line ~ .card-description-line {
+    padding-top: 2mm;
+}
+
+.card {
+    background: radial-gradient(circle at top center, var(--card-color), color-mix(in srgb, var(--card-color) 80%, black));
+}
+
+.card-header, .card-content-container > * {
+    color: white;
+    background: transparent;
+}
+
+.card-content-container > .card-description-line,
+.card-content-container > .card-description-line ~ * {
+    color: black;
+    background: white;
+}
+
+.card-content-container > .card-element:last-child {
     flex-grow: 1;
 }
 
@@ -89,6 +142,7 @@
     margin: -1mm 0 0mm 1mm;
 }
 .card-title-inlineicon-container {
+    height: 80%;
     display: flex;
     justify-content: flex-end;
     background-color: inherit;
@@ -97,13 +151,39 @@
 }
 
 .card-title {
-    height: 8mm;
-    padding-left: 2mm;
-    font-family: Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
-    font-variant: small-caps;
-    font-weight: bold;
-    background-color: inherit;
-    color: white;
+    font-family: 'Chomsky', Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
+}
+.card-title-24 {
+    font-size: 24pt;
+    line-height: 1.5;
+}
+.card-title-23 {
+    font-size: 23pt;
+    line-height: 1.5;
+}
+.card-title-22 {
+    font-size: 22pt;
+    line-height: 1.5;
+}
+.card-title-21 {
+    font-size: 21pt;
+    line-height: 1.5;
+}
+.card-title-20 {
+    font-size: 20pt;
+    line-height: 1.5;
+}
+.card-title-19 {
+    font-size: 19pt;
+    line-height: 1.5;
+}
+.card-title-18 {
+    font-size: 18pt;
+    line-height: 1.5;
+}
+.card-title-17 {
+    font-size: 17pt;
+    line-height: 1.5;
 }
 .card-title-16 {
     font-size: 16pt;
@@ -158,12 +238,15 @@
     line-height: 1.3;
 }
 .card-subtitle {
-    margin-bottom: 0.0em;
-    line-height: 18px;
-    font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
-    font-size: 10pt;
-    font-style: italic;
+    font-family: "EB Garamond", 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
 }
+
+.card-content-container .card-subtitle:first-child {
+    margin: -.7em 0 .7em;
+}
+
 .card-picture {
     height: 80px;
     line-height: 18px;
@@ -190,17 +273,43 @@
 }
 
 .card-property-line {
-    text-indent: -1em;
-    margin-left: 1em;
-    color: black;
+    /* text-indent: -1em; */
+    /* margin-left: 1em; */
+    /* color: black; */
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 .card-property-name {
     display: inline;
     font-size: inherit;
+    margin: 0;
 }
 .card-property-text {
     display: inline;
+    margin: 0;
+}
+
+.card-property-array {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-property-inline {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card-property-inline:not(:last-child) {
+    border-right: 1px solid;
+}
+
+.card-property-inline .game-icon {
+    font-size: 14px;
 }
 
 .card-section {
@@ -224,8 +333,6 @@
 .card-fill {flex:1;}
 
 .card-description-line {
-    margin-top: 0.5em;
-    margin-bottom: 0.0em;
     color: black;
 }
 .card-description-name {
@@ -240,12 +347,23 @@
     display: inline;
 }
 
-.card-ruler {
+.card-ruler-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 1.0mm;
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
+    background: linear-gradient(var(--card-color), var(--card-color));
+    background-size: 100% 10px;
+    padding: 1em 0;
 }
+
+.card-ruler {
+    fill: transparent;
+    stroke-width: 1px;
+    stroke: var(--card-color);
+    display: block;
+}
+
 
 .card-p2e-ruler {
     width: 100%;
