@@ -426,13 +426,13 @@ function card_element_section(params, card_data, options) {
     var color = card_data_color_front(card_data, options);
     var section = params[0] || "";
 
-    var result = '<h3 class="card-section" style="color:' + color + '">';
+    var result = '<div class="card-element card-section"><h3>';
     if (params[1])
 	{
 		result += '<div style="float:right">' + params[1]+ '</div>';
 	}
     result += '<div>' + section + '</div>';
-    result += '</h3>';
+    result += '</h3></div>';
 
     return result;
 }

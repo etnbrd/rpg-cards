@@ -18,6 +18,11 @@ body {
   margin: 0 auto;
 }
 
+.card {
+  outline: 1px solid #eee;
+  box-shadow: none;
+}
+
 @media print {
   .page-preview {
     margin: 0;
