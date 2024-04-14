@@ -1,0 +1,5 @@
+@font-face {
+	font-family: "Maghfirea";
+	src: url("Maghfirea.otf") format("opentype"),
+         url("Maghfirea.ttf") format("truetype");
+}

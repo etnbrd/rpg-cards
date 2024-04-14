@@ -61,7 +61,7 @@
 }
 
 .card-back-corner-icon {
-    font-family: 'Chomsky';
+    font-family: 'Maghfirea';
     font-size: 44pt;
     color: white;
     position: absolute;
@@ -153,7 +153,7 @@
 }
 
 .card-title {
-    font-family: 'Chomsky', Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
+    font-family: 'Maghfirea', Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
     line-height: 0.8em;
 }
 .card-title-24 {

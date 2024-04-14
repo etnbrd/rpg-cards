@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .page-background {
   background: rgb(204,204,204); 
 }

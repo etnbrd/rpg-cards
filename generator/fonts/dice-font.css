@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'dice-font';
+    src: url('dice-font.woff') format('woff'),
+         url('dice-font.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

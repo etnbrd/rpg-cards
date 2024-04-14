@@ -109,6 +109,9 @@ function card_element_level(params, card_data, options) {
     card_data.level = params[0]
 }
 
+function card_element_spell_school(params, card_data, options) {
+    card_data.spell_school = params[0]
+}
 
 function card_element_icon(card_data, options) {
     var icons = card_data_icon_front(card_data, options).split(/[\s\uFEFF\xA0]+/).filter(icon=>icon);
@@ -455,6 +458,7 @@ var card_element_generators = {
     property: card_element_property,
     property_inline_array: card_element_property_inline_array,
     level: card_element_level,
+    spell_school: card_element_spell_school,
     rule: card_element_ruler,
     ruler: card_element_ruler,
     p2e_rule: card_element_p2e_ruler,
@@ -634,27 +638,42 @@ function card_generate_back(data, options) {
 
 	var url = data.background_image;
 	var background_style = "";
-	if (url)
+    var back_content = ""
+
+    console.log({data}, data.spell_school, ['evocation'].includes(data.spell_school), data.spell_school && ['evocation'].includes(data.spell_school))
+    const spell_schools = [
+        'abjuration',
+        'conjuration',
+        'divination',
+        'enchantment',
+        'evocation',
+        'illusion',
+        'necromancy',
+        'transmutation',
+    ]
+    if (data.spell_school && spell_schools.includes(data.spell_school)) {
+        background_style = 'style = "background-image: url(&quot;img/backgrounds/' + data.spell_school + '.png&quot;); background-size: contain; background-position: center; background-repeat: no-repeat;"';
+        console.log(background_style)
+    }
+	else if (url)
 	{
 		background_style = 'style = "background-image: url(&quot;' + url + '&quot;); background-size: contain; background-position: center; background-repeat: no-repeat;"';
 	}
 	else
 	{
 		background_style = card_generate_color_gradient_style(color, options);
+		back_content += '    <div class="card-back-inner">';
+		back_content += '      <div class="card-back-icon icon-' + icon + '" ' + icon_style + '></div>';
+		back_content += '    </div>';
     }
 	var icon = card_data_icon_back(data, options);
 
     var result = "";
     result += '<div class="card' + ' ' + (options.rounded_corners ? 'rounded-corners' : '') + '" ' + card_style + '>';
     result += '  <div class="card-back" ' + background_style + '>';
-    result += '    <div class="card-back-corner-icon">' + data.level + '</div>'
-	if (!url)
-	{
-		result += '    <div class="card-back-inner">';
-		result += '      <div class="card-back-icon icon-' + icon + '" ' + icon_style + '></div>';
-		result += '    </div>';
-    }
-    result += '    <div class="card-back-corner-icon">' + data.level + '</div>'
+    result += data.level > 0 ?  '    <div class="card-back-corner-icon">' + data.level + '</div>' : ''
+	result += back_content
+    result += data.level > 0 ? '    <div class="card-back-corner-icon">' + data.level + '</div>' : ''
     result += '  </div>';
     result += '</div>';
 

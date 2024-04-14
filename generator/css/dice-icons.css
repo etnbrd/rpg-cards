@@ -1,0 +1,9 @@
+dice {
+    font-family: 'dice-font';
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 1.4em;
+    transform: translate(0, -.15em);
+    /* margin-left: -.2em; */
+    /* letter-spacing: -.5em; */
+}
