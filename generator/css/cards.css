@@ -9,14 +9,39 @@
 
     outline: 1px solid color-mix(in srgb, var(--card-color) 70%, black);
     box-shadow: 0 5px 10px 0 grey;
-}
-
-.card-header, .card-element {
-    padding: 0 4mm;
+    background: radial-gradient(circle at top center, var(--card-color), color-mix(in srgb, var(--card-color) 80%, black));
 }
 
 .card.rounded-corners {
     border-radius: 4px;
+}
+
+
+.card-header, .card-content-container {
+    padding-top: 4mm;
+}
+
+.card-header + .card-content-container {
+    margin-top: 0;
+    padding-top: 4mm;
+}
+
+.card-header {
+    padding-bottom: 4mm;
+}
+
+.card-header {
+    color: var(--header-font-color);
+    background: transparent;
+}
+
+.card-content-container {
+    color: var(--content-font-color);
+    background: var(--content-background-color);
+}
+
+.card-content-container .card-title, .card-content-container .card-subtitle {
+    color: var(--card-color);
 }
 
 .card-content-container {
@@ -69,164 +94,58 @@
 }
 
 .card-back-corner-icon:first-child {
-    top: 0em;
-    left: 0em;
+    top: 4mm;
+    left: 1mm;
 }
 
 .card-back-corner-icon:last-child {
-    bottom: 0em;
-    right: 0em;
+    bottom: 4mm;
+    right: 1mm;
     transform: rotate(180deg);
 }
 
-.card-header {
+.card-element {
+    padding: 0 4mm;
+}
+
+.card-title, .card-subtitle {
     display: flex;
-    margin: 4mm 0 2mm;
-}
-.card-header > * {
-    flex-grow: 1;
-}
-
-/* The last item before a description line */
-.card-content-container *:not(.card-description-line, .card-section):has(+ .card-description-line) {
-    padding-bottom: 4mm;
-}
-
-.card-content-container > .card-description-line {
-    padding-top: 4mm;
-}
-.card-content-container > .card-description-line ~ .card-description-line {
-    padding-top: 2mm;
-}
-
-.card {
-    background: radial-gradient(circle at top center, var(--card-color), color-mix(in srgb, var(--card-color) 80%, black));
-}
-
-.card-header, .card-content-container > * {
-    color: white;
-    background: transparent;
-}
-
-.card-content-container > .card-description-line,
-.card-content-container > .card-description-line ~ * {
-    color: black;
-    background: white;
-}
-
-.card-content-container > .card-element:last-child {
-    flex-grow: 1;
-}
-
-.card-title-icon, .card-font-size-icon {
-    width: 12mm;
-    height: 12mm;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: inherit;
-    border-color: inherit;
-}
-.card-title-icon-container, .card-font-size-icon-container  {
-    border-radius: 1mm;
-    background-color: inherit;
-    border-color: inherit;
-}
-
-.card-title-inlineicon, .card-font-size-inlineicon {
-    width: auto;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: inherit;
-    border-color: inherit;
-    margin: -1mm 0 0mm 1mm;
-}
-.card-title-inlineicon-container {
-    height: 24pt;
-    aspect-ratio: 1/1;
-    display: flex;
-    justify-content: flex-end;
-    background-color: inherit;
-    border-color: inherit;
-    padding: 1mm 0 1mm 1mm;
-    margin-bottom: -24pt; /* allow to bring the subtitle as close to the title as needed*/
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .card-title {
-    font-family: 'Maghfirea', Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
-    line-height: 0.8em;
-}
-.card-title-24 {
-    font-size: 24pt;
-}
-.card-title-23 {
-    font-size: 23pt;
-}
-.card-title-22 {
-    font-size: 22pt;
-}
-.card-title-21 {
-    font-size: 21pt;
-}
-.card-title-20 {
-    font-size: 20pt;
-}
-.card-title-19 {
-    font-size: 19pt;
-}
-.card-title-18 {
-    font-size: 18pt;
-}
-.card-title-17 {
-    font-size: 17pt;
-}
-.card-title-16 {
-    font-size: 16pt;
-}
-.card-title-15 {
-    font-size: 15pt;
-}
-.card-title-14 {
-    font-size: 14pt;
-}
-.card-title-13 {
-    font-size: 13pt;
-}
-.card-title-12 {
-    font-size: 12pt;
-}
-.card-title-11 {
-    font-size: 11pt;
-}
-.card-title-10 {
-    font-size: 10pt;
-}
-.card-font-size-12 {
-    font-size: 12px;
-}
-.card-font-size-11 {
-    font-size: 11px;
-}
-.card-font-size-10 {
-    font-size: 10px;
-}
-.card-font-size-9 {
-    font-size: 9px;
-}
-.card-font-size-8 {
-    font-size: 8px;
-}
-.card-font-size-smaller {
-    font-size: smaller;
-}
-.card-subtitle {
-    font-family: "EB Garamond", 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
-    font-size: 12pt;
-    font-weight: bold;
+    font-size: var(--title-font-size);
+    font-family: var(--title-font-family);
 }
 
-.card-content-container .card-subtitle:first-child {
-    margin: -.5em 0 .7em;
+.card-subtitle {
+    font-size: var(--subtitle-font-size);
+}
+
+.card-title > *, .card-subtitle > * {
+    font-size: inherit;
+    margin: 0;
+    line-height: 0.8em;
+    font-weight: 400;
+}
+
+.card-title .game-icon {
+    display: inline-block;
+    line-height: 0;
+}
+
+.card-title .game-icon:before {
+    font-size: .7em;
+}
+
+
+.card-title + *, .card-subtitle + * {
+    margin-top: 3mm;
+}
+
+.card-title + .card-subtitle {
+    margin-top: 1mm;
 }
 
 .card-picture {
@@ -255,9 +174,6 @@
 }
 
 .card-property-line {
-    /* text-indent: -1em; */
-    /* margin-left: 1em; */
-    /* color: black; */
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -275,7 +191,6 @@
 
 .card-property-array {
     display: flex;
-    flex-basis: auto;
     justify-content: space-between;
 }
 
@@ -302,25 +217,32 @@
 }
 
 .card-section {
-    padding-top: .4em;
+    padding-top: .6em;
 }
 
 .card-section h3 {
     color: var(--card-color);
-    border-bottom: 1px solid;
-    border-color: var(--card-color);
-    font-size: 10pt;
+    border-bottom: .3px solid var(--card-color);
+    font-size: 1.3em;
     font-variant: small-caps;
     font-weight: normal;
     letter-spacing: 1px;
     margin: 0;
 }
-/* .card-section + .card-element {
-    margin-top: 0.3em;
-} */
 
 .card-p {
 
+}
+
+.card-element ul {
+    padding-left: 1em;
+}
+
+.card-element li {
+}
+
+.card-element li:first-of-type {
+margin-top: 0.5em;
 }
 
 .card-fill {flex:1;}
@@ -328,6 +250,11 @@
 .card-description-line {
     color: black;
 }
+
+.card-description-line:not(:first-child) {
+    margin-top: 2mm;
+}
+
 .card-description-name {
     display: inline;
     font-size: inherit;

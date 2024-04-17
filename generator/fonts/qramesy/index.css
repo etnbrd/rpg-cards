@@ -1,0 +1,5 @@
+@font-face {
+	font-family: "Qramesy";
+	src: url("Qramesy Demo.otf") format("opentype"),
+         url("Qramesy Demo.ttf") format("truetype");
+}

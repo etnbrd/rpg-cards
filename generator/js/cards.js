@@ -98,12 +98,25 @@ function card_size_class(card_data, options) {
 // Card element generating functions
 // ============================================================================
 
-function card_element_title(card_data, options) {
-    var title = card_data.title || "";
-    var title_size = card_data.title_size || options.default_title_size || 'normal';
-    return '<div class="card-title card-title-' + title_size + '">' + title + '</div>';
+function card_element_title(params, card_data, options) {
+    const [title = "", rightTitle] = params
+    return [
+        `<div class="card-element card-title">`,
+        `<h1>${ title }</h1>`,
+        rightTitle ? `<div class="card-title-right">${ rightTitle }</div>` : '',
+        '</div>',
+    ].join('')
 }
 
+function card_element_subtitle(params, card_data, options) {
+    var [subtitle = "", rightSubtitle] = params;
+    return [
+        '<div class="card-element card-subtitle">',
+        `<h2>${ subtitle }</h2>`,
+        rightSubtitle ? `<div class="card-subtitle-right">${ rightSubtitle }</div>` : '',
+        '</div>'
+    ].join('')
+}
 
 function card_element_level(params, card_data, options) {
     card_data.level = params[0]
@@ -125,18 +138,6 @@ function card_element_icon(card_data, options) {
     icons.forEach(function(icon){
         result += '    <img class="card-title-' + classname + ' icon-' + icon + '" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">';
     });
-    result += '</div>';
-    return result;
-}
-
-function card_element_subtitle(params, card_data, options) {
-    var subtitle = params[0] || "";
-    var result = '<div class="card-element card-subtitle">';
-    if (params[1])
-	{
-		result += '<div style="float:right">' + params[1] + '</div>';
-	}
-    result += '<div>' + subtitle + '</div>';
     result += '</div>';
     return result;
 }
@@ -454,6 +455,8 @@ function card_element_empty(params, card_data, options) {
 }
 
 var card_element_generators = {
+    header_separator: () => "",
+    title: card_element_title,
     subtitle: card_element_subtitle,
     property: card_element_property,
     property_inline_array: card_element_property_inline_array,
@@ -489,46 +492,70 @@ var card_element_generators = {
 
 function card_generate_contents(contents, card_data, options) {
     var result = "";
-   
-    const root_properties = []
+    const {header_elements, content_elements} = get_card_elements(contents)
+
+    const html = [
+        header_elements.length > 0
+            ? `<div class="card-header">${generate_elements(header_elements, card_data, options)}</div>`
+            : '',
+        `<div class="card-content-container">${generate_elements(content_elements, card_data, options)}</div>`,
+    ].join('')
+
+    const interpolated_html = interpolate_tags(html)
+
+    return interpolated_html;
+}
+
+function get_card_elements(contents) {
+    const header_elements = []
+    const content_elements = []
     for (const line of contents) {
         var [element_name, ...element_params] = card_data_split_params(line);
 
+        if (element_name === 'header_separator') {
+            header_elements.push(...content_elements)
+            content_elements.length = 0
+        }
+
         // gather all subsequent property_inline elements together in a property_inline_array
         if (element_name === 'property_inline') {
-            const last_root_property = root_properties.at(-1)
-            if (last_root_property?.element_name === 'property_inline_array') {
-                last_root_property.element_params.push(element_params);
+            const last_pushed_element = content_elements.at(-1)
+            if (last_pushed_element?.element_name === 'property_inline_array') {
+                last_pushed_element.element_params.push(element_params);
             } else {
-                root_properties.push({element_name: 'property_inline_array', element_params: [element_params]});
+                content_elements.push({element_name: 'property_inline_array', element_params: [element_params]});
             }
         } else {
-            root_properties.push({element_name, element_params});
+            content_elements.push({element_name, element_params});
         }
     }
 
-    console.log({ root_properties })
+    return {header_elements, content_elements}
+}
 
-    var html = root_properties.map(function ({element_name, element_params}) {
-        var element_generator = card_element_generators[element_name];
-        if (element_generator) {
-            return element_generator(element_params, card_data, options);
-        } else if (element_name.length > 0) {
-            return card_element_unknown(element_params, card_data, options);
-        }
-    }).join("\n");
+function generate_elements(elements, card_data, options) {
+    return elements.map(
+        ({element_name, element_params}) =>
+            (card_element_generators[element_name] ?? card_element_unknown)(element_params, card_data, options)
+        ).join("\n");
+}
 
-    var tagNames = ['icon'];
+function interpolate_tags(html) {
+    const tagNames = ['icon'];
 
-    tagNames.forEach(function(tagName){
+    for (const tagName of tagNames) {
         var tagRegExp = new RegExp('<'+tagName+'[^>]*>', 'g');
         var attrRegExp = new RegExp('([\\w-]+)="([^"]+)"', 'g')
-
+    
         var matches = [];
         forEachMatch(tagRegExp, html, function(m){
             matches.push(m);
         });
-        if (!matches.length) return null;
+        console.log({matches})
+        if (matches.length === 0) {
+            continue;
+        }
+    
 
         var tagResults = new Array(matches.length);
         matches.forEach(function(match, i){
@@ -562,17 +589,15 @@ function card_generate_contents(contents, card_data, options) {
                 tagResults[i] = tagResult;
             }
         });
-
+    
         html = html.replace(tagRegExp, function(){
             return tagResults.shift();
         });
+    }
 
-    });
+    console.log({html})
 
-    result += '<div class="card-content-container">';
-    result += html;
-    result += '</div>';
-    return result;
+    return html
 }
 
 function card_repeat(card, count) {
@@ -599,16 +624,23 @@ function add_size_to_style(style, width, height) {
 }
 
 function card_generate_front(data, options) {
-    var color = card_data_color_front(data, options);
-    var style_color = card_generate_color_style(color, options);
-    var card_style = add_size_to_style(style_color, options.card_width, options.card_height);
+    const color = card_data_color_front(data, options);
+    const style_color = card_generate_color_style(color, options);
+    const card_style = add_size_to_style(style_color, options.card_width, options.card_height);
+    const {title_size = options.default_title_size || 'normal'} = card_data;
 
     var result = "";
     result += '<div class="card ' + (options.rounded_corners ? 'rounded-corners' : '') + '" ' + card_style + '>';
-    result += '<div class="card-header">';
-    result += card_element_title(data, options);
-    result += card_element_icon(data, options);
-    result += '</div>';
+    result += `<style>
+        :root {
+            --title-font-family: "Maghfirea";
+            --title-font-size: ${ title_size}pt;
+            --subtitle-font-size: 11pt;
+            --header-font-color: white;
+            --content-font-color: black;
+            --content-background-color: white;
+        }
+    </style>`
     result += card_generate_contents(data.contents, data, options);
     result += '</div>';
 
