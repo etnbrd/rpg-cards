@@ -33,7 +33,6 @@
     <script type="text/javascript" src="js/icons.js"></script>
     <script type="text/javascript" defer src="js/ui.js"></script>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     <link href="fonts/game-icons.css" rel="stylesheet" />
     <link href="fonts/dice-font.css" rel="stylesheet" />
     <link href="fonts/index.css" rel="stylesheet" />
@@ -342,7 +341,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <button type="button" class="btn btn-primary btn-block" id="button-apply-default-color"
-                                                onclick="">&gt;</button>
+                                                onclick="">⏭</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -359,7 +358,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <button type="button" class="btn btn-primary btn-block" id="button-apply-default-icon-back"
-                                                onclick="">&gt;</button>
+                                                onclick="">⏭</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -376,7 +375,7 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <button type="button" class="btn btn-primary btn-block" id="button-apply-default-icon-front"
-                                                onclick="">&gt;</button>
+                                                onclick="">⏭</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -391,51 +390,87 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <button type="button" class="btn btn-primary btn-block" id=""
-                                                onclick="">&gt;</button>
+                                                onclick="">⏭</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="default-title-size" class="col-sm-4 control-label">Title font size</label>
+                                        <label for="default-title-font-family" class="col-sm-4 control-label">Title font family</label>
                                         <div class="col-sm-6">
-                                            <select class="form-control" id="default-title-size">
-                                                <option value="24" selected>24pt (initial)</option>
-                                                <option value="23">23pt</option>
-                                                <option value="22">22pt</option>
-                                                <option value="21">21pt</option>
-                                                <option value="20">20pt</option>
-                                                <option value="19">19pt</option>
-                                                <option value="18">18pt</option>
-                                                <option value="17">17pt</option>
-                                                <option value="16">16pt</option>
-                                                <option value="15">15pt</option>
-                                                <option value="14">14pt</option>
-                                                <option value="13">13pt</option>
-                                                <option value="12">12pt</option>
-                                                <option value="11">11pt</option>
-                                                <option value="10">10pt</option>
+                                            <select class="form-control" id="default-title-font-family">
+                                                <option value="Archivo Narrow">Archivo Narrow</option>
+                                                <option value="Bebas Neue">Bebas Neue</option>
+                                                <option value="Calendas">Calendas</option>
+                                                <option value="Chomsky">Chomsky</option>
+                                                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                                                <option value="DM Serif Display">DM Serif Display</option>
+                                                <option value="EB Garamond">EB Garamond</option>
+                                                <option value="Great Vibes">Great Vibes</option>
+                                                <option value="Indie Flower">Indie Flower</option>
+                                                <option value="Jacquard 24">Jacquard 24</option>
+                                                <option value="Kalam">Kalam</option>
+                                                <option value="Maghfirea">Maghfirea</option>
+                                                <option value="Nanum Myeongio">Nanum Myeongio</option>
+                                                <option value="Pathway Gothic One">Pathway Gothic One</option>
+                                                <option value="Permanent Marker">Permanent Marker</option>
+                                                <option value="Pixelify Sans">Pixelify Sans</option>
+                                                <option value="Playfair Display">Playfair Display</option>
+                                                <option value="Silvermist">Silvermist</option>
+                                                <option value="Slabo">Slabo</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-primary btn-block" id="button-apply-default-font-title"
-                                                onclick="">&gt;</button>
+                                            <button type="button" class="btn btn-primary btn-block" id="button-apply-default-title-font-family"
+                                                onclick="">⏭</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="default-card-font-size" class="col-sm-4 control-label">Text font size</label>
+                                        <label for="default-title-font-size" class="col-sm-4 control-label">Title font size</label>
                                         <div class="col-sm-6">
-                                            <select class="form-control" id="default-card-font-size">
-                                                <option value="12" selected>12px (initial)</option>
-                                                <option value="11">11px</option>
-                                                <option value="inherit">10.66px (inherit: 8pt)</option>
-                                                <option value="10">10px</option>
-                                                <option value="9">9px</option>
-                                                <option value="smaller">8.88px (smaller)</option>
-                                                <option value="8">8px</option>
+                                            <input type="number" id="default-title-font-size" class="form-control" placeholder="Title font size" value="24">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-primary btn-block" id="button-apply-default-title-font-size"
+                                                onclick="">⏭</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="default-body-font-family" class="col-sm-4 control-label">Body font family</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" id="default-body-font-family">
+                                                <option value="Archivo Narrow">Archivo Narrow</option>
+                                                <option value="Bebas Neue">Bebas Neue</option>
+                                                <option value="Calendas">Calendas</option>
+                                                <option value="Chomsky">Chomsky</option>
+                                                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                                                <option value="DM Serif Display">DM Serif Display</option>
+                                                <option value="EB Garamond">EB Garamond</option>
+                                                <option value="Great Vibes">Great Vibes</option>
+                                                <option value="Indie Flower">Indie Flower</option>
+                                                <option value="Jacquard 24">Jacquard 24</option>
+                                                <option value="Kalam">Kalam</option>
+                                                <option value="Maghfirea">Maghfirea</option>
+                                                <option value="Nanum Myeongio">Nanum Myeongio</option>
+                                                <option value="Pathway Gothic One">Pathway Gothic One</option>
+                                                <option value="Permanent Marker">Permanent Marker</option>
+                                                <option value="Pixelify Sans">Pixelify Sans</option>
+                                                <option value="Playfair Display">Playfair Display</option>
+                                                <option value="Silvermist">Silvermist</option>
+                                                <option value="Slabo">Slabo</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="button" class="btn btn-primary btn-block" id="button-apply-default-font-card"
-                                                onclick="">&gt;</button>
+                                            <button type="button" class="btn btn-primary btn-block" id="button-apply-default-body-font-family"
+                                                onclick="">⏭</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="default-body-font-size" class="col-sm-4 control-label">Body font size</label>
+                                        <div class="col-sm-6">
+                                            <input type="number" id="default-body-font-size" class="form-control" placeholder="Body font size" value="12">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="button" class="btn btn-primary btn-block" id="button-apply-default-body-font-card"
+                                                onclick="">⏭</button>
                                         </div>
                                     </div>
                                 </form>
@@ -486,39 +521,67 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="card-title-size" class="col-sm-2 control-label">Title font size</label>
+                        <label for="card-title-font-family" class="col-sm-2 control-label">Title font family</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="card-title-size" data-property="title_size">
-                                <option value="24">24pt (initial)</option>
-                                <option value="23">23pt</option>
-                                <option value="22">22pt</option>
-                                <option value="21">21pt</option>
-                                <option value="20">20pt</option>
-                                <option value="19">19pt</option>
-                                <option value="18">18pt</option>
-                                <option value="17">17pt</option>
-                                <option value="16">16pt</option>
-                                <option value="15">15pt</option>
-                                <option value="14">14pt</option>
-                                <option value="13">13pt</option>
-                                <option value="12">12pt</option>
-                                <option value="11">11pt</option>
-                                <option value="10">10pt</option>
+                            <select class="form-control" id="card-title-font-family" data-property="title_font_family">
+                                <option value="Archivo Narrow">Archivo Narrow</option>
+                                <option value="Bebas Neue">Bebas Neue</option>
+                                <option value="Calendas">Calendas</option>
+                                <option value="Chomsky">Chomsky</option>
+                                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                                <option value="DM Serif Display">DM Serif Display</option>
+                                <option value="EB Garamond">EB Garamond</option>
+                                <option value="Great Vibes">Great Vibes</option>
+                                <option value="Indie Flower">Indie Flower</option>
+                                <option value="Jacquard 24">Jacquard 24</option>
+                                <option value="Kalam">Kalam</option>
+                                <option value="Maghfirea">Maghfirea</option>
+                                <option value="Nanum Myeongio">Nanum Myeongio</option>
+                                <option value="Pathway Gothic One">Pathway Gothic One</option>
+                                <option value="Permanent Marker">Permanent Marker</option>
+                                <option value="Pixelify Sans">Pixelify Sans</option>
+                                <option value="Playfair Display">Playfair Display</option>
+                                <option value="Silvermist">Silvermist</option>
+                                <option value="Slabo">Slabo</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="card-font-size" class="col-sm-2 control-label">Text size</label>
+                        <label for="card-title-size" class="col-sm-2 control-label">Title font size</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="card-font-size" data-property="card_font_size">
-                                <option value="12">12px (initial)</option>
-                                <option value="11">11px</option>
-                                <option value="inherit">10.66px (inherit: 8pt)</option>
-                                <option value="10">10px</option>
-                                <option value="9">9px</option>
-                                <option value="smaller">8.88px (smaller)</option>
-                                <option value="8">8px</option>
+                            <input type="number" id="card-title-font-size" class="form-control" placeholder="Title font size" data-property="title_font_size" value="24">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-body-font-family" class="col-sm-2 control-label">Body font family</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="card-body-font-family" data-property="body_font_family">
+                                <option value="Archivo Narrow">Archivo Narrow</option>
+                                <option value="Bebas Neue">Bebas Neue</option>
+                                <option value="Calendas">Calendas</option>
+                                <option value="Chomsky">Chomsky</option>
+                                <option value="Cormorant Garamond">Cormorant Garamond</option>
+                                <option value="DM Serif Display">DM Serif Display</option>
+                                <option value="EB Garamond">EB Garamond</option>
+                                <option value="Great Vibes">Great Vibes</option>
+                                <option value="Indie Flower">Indie Flower</option>
+                                <option value="Jacquard 24">Jacquard 24</option>
+                                <option value="Kalam">Kalam</option>
+                                <option value="Maghfirea">Maghfirea</option>
+                                <option value="Nanum Myeongio">Nanum Myeongio</option>
+                                <option value="Pathway Gothic One">Pathway Gothic One</option>
+                                <option value="Permanent Marker">Permanent Marker</option>
+                                <option value="Pixelify Sans">Pixelify Sans</option>
+                                <option value="Playfair Display">Playfair Display</option>
+                                <option value="Silvermist">Silvermist</option>
+                                <option value="Slabo">Slabo</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-font-size" class="col-sm-2 control-label">Body font size</label>
+                        <div class="col-sm-10">
+                            <input type="number" id="card-body-font-size" class="form-control" placeholder="Body font size" data-property="body_font_size" value="12">
                         </div>
                     </div>
                     <div class="form-group">

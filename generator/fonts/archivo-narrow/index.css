@@ -1,0 +1,63 @@
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+	src: url("ArchivoNarrow-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+	src: url("ArchivoNarrow-BoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+	src: url("ArchivoNarrow-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+	src: url("ArchivoNarrow-SemiBoldItalic.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+	src: url("ArchivoNarrow-Medium.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+	src: url("ArchivoNarrow-MediumItalic.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+	src: url("ArchivoNarrow-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Archivo Narrow";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+	src: url("ArchivoNarrow-Italic.ttf") format("truetype");
+}

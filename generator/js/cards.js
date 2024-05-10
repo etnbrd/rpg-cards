@@ -8,8 +8,10 @@ function card_default_options() {
         default_color: "black",
         default_icon_front: "",
         default_icon_back: "",
-        default_title_size: "13",
-        default_card_font_size: "inherit",
+        default_title_font_family: "Pathway Gothic One",
+        default_title_font_size: 24,
+        default_body_font_family: "EB Garamond",
+        default_body_font_size: 12,
         page_size: "210mm,297mm",
         page_rows: "3",
         page_columns: "3",
@@ -551,7 +553,6 @@ function interpolate_tags(html) {
         forEachMatch(tagRegExp, html, function(m){
             matches.push(m);
         });
-        console.log({matches})
         if (matches.length === 0) {
             continue;
         }
@@ -595,8 +596,6 @@ function interpolate_tags(html) {
         });
     }
 
-    console.log({html})
-
     return html
 }
 
@@ -624,31 +623,58 @@ function add_size_to_style(style, width, height) {
 }
 
 function card_generate_front(data, options) {
-    const color = card_data_color_front(data, options);
-    const style_color = card_generate_color_style(color, options);
-    const card_style = add_size_to_style(style_color, options.card_width, options.card_height);
-    const {title_size = options.default_title_size || 'normal'} = card_data;
+    const colorDesc = card_data_color_front(data, options);
+    const colors = colorDesc.split('|')
+    const color = colors[0]
+    if (colors.length === 1) {
+        colors.push('color-mix(in srgb, var(--card-color) 80%, black)')
+    }
 
-    var result = "";
-    result += '<div class="card ' + (options.rounded_corners ? 'rounded-corners' : '') + '" ' + card_style + '>';
-    result += `<style>
-        :root {
-            --title-font-family: "Maghfirea";
-            --title-font-size: ${ title_size}pt;
-            --subtitle-font-size: 11pt;
-            --header-font-color: white;
-            --content-font-color: black;
-            --content-background-color: white;
-        }
-    </style>`
-    result += card_generate_contents(data.contents, data, options);
-    result += '</div>';
+    const {
+        title,
+        title_font_family = options.default_title_font_family || 'Pathway Gothic One',
+        title_font_size = options.default_title_font_size || 24,
+        body_font_family = options.default_body_font_family || 'EB Garamond',
+        body_font_size = options.default_body_font_size || 12,
+    } = data;
+    const id = `card-${title.replaceAll(/ /g, '-')}`
 
-    return result;
+    const content = card_generate_contents(data.contents, data, options);
+
+    return `
+        <div
+            id="${id}"
+            class="card ${ options.rounded_corners ? 'rounded-corners' : ''}"
+            >
+        <style>
+            #${id} {
+                --card-color: ${color};
+                --card-background: radial-gradient(circle at top center, ${colors.join(', ')});
+                --title-font-family: "${ title_font_family }";
+                --title-font-size: ${ title_font_size }pt;
+                --subtitle-font-size: 11pt;
+                --body-font-family: "${ body_font_family }";
+                --body-font-size: ${ body_font_size }pt;
+                --header-font-color: white;
+                --content-font-color: black;
+                --content-background-color: white;
+                width: ${options.card_width};
+                height: ${options.card_height};
+            }
+        </style>
+            ${content}
+        </div>
+    `
 }
 
 function card_generate_back(data, options) {
-    var color = card_data_color_back(data, options);
+    const colorDesc = card_data_color_back(data, options);
+    const colors = colorDesc.split('|')
+    const color = colors[0]
+    if (colors.length === 1) {
+        colors.push('color-mix(in srgb, var(--card-color) 80%, black)')
+    }
+
     var style_color = card_generate_color_style(color, options);
 
     var width = options.card_width;
@@ -656,8 +682,12 @@ function card_generate_back(data, options) {
 
     var card_style = add_size_to_style(style_color, width, height);
 
+    const {title} = data
+
+    const id = `card-${title.replaceAll(/ /g, '-')}`
+
     var $tmpCardContainer = $('<div style="position:absolute;visibility:hidden;pointer-events:none;"></div>');
-    var $tmpCard = $('<div class="card" ' + card_style + '><div class="card-back"><div class="card-back-inner"><div class="card-back-icon"></div></div></div></div>');
+    var $tmpCard = $('<div id="'+id+'" class="card" ' + card_style + '><div class="card-back"><div class="card-back-inner"><div class="card-back-icon"></div></div></div></div>');
     $('#preview-container').append($tmpCardContainer.append($tmpCard));
     
     var $tmpCardInner = $tmpCard.find('.card-back-inner');
@@ -672,7 +702,6 @@ function card_generate_back(data, options) {
 	var background_style = "";
     var back_content = ""
 
-    console.log({data}, data.spell_school, ['evocation'].includes(data.spell_school), data.spell_school && ['evocation'].includes(data.spell_school))
     const spell_schools = [
         'abjuration',
         'conjuration',
@@ -685,7 +714,6 @@ function card_generate_back(data, options) {
     ]
     if (data.spell_school && spell_schools.includes(data.spell_school)) {
         background_style = 'style = "background-image: url(&quot;img/backgrounds/' + data.spell_school + '.png&quot;); background-size: contain; background-position: center; background-repeat: no-repeat;"';
-        console.log(background_style)
     }
 	else if (url)
 	{
@@ -701,7 +729,7 @@ function card_generate_back(data, options) {
 	var icon = card_data_icon_back(data, options);
 
     var result = "";
-    result += '<div class="card' + ' ' + (options.rounded_corners ? 'rounded-corners' : '') + '" ' + card_style + '>';
+    result += '<div id="'+id+'" class="card' + ' ' + (options.rounded_corners ? 'rounded-corners' : '') + '" ' + card_style + '>';
     result += '  <div class="card-back" ' + background_style + '>';
     result += data.level > 0 ?  '    <div class="card-back-corner-icon">' + data.level + '</div>' : ''
 	result += back_content

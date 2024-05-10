@@ -178,8 +178,9 @@ function ui_update_selected_card() {
     var card = ui_selected_card();
     if (card) {
         $("#card-title").val(card.title);
-        $("#card-title-size").val(card.title_size);
-        $("#card-font-size").val(card.card_font_size);
+        $("#card-title-font-family").val(card.title_font);
+        $("#card-title-font-size").val(card.title_font_size);
+        $("#card-body-font-size").val(card.card_font_size);
         $("#card-count").val(card.count);
         $("#card-icon").val(card.icon_front);
         $("#card-icon-back").val(card.icon_back);
@@ -189,8 +190,9 @@ function ui_update_selected_card() {
         $("#card-color").val(card.color).change();
     } else {
         $("#card-title").val("");
-        $("#card-title-size").val("");
-        $("#card-font-size").val("");
+        $("#card-title-font-family").val("");
+        $("#card-title-font-size").val("");
+        $("#card-body-font-size").val("");
         $("#card-count").val(1);
         $("#card-icon").val("");
         $("#card-icon-back").val("");
@@ -513,8 +515,13 @@ function ui_change_card_tags() {
     }
 }
 
-function ui_change_default_title_size() {
-    card_options.default_title_size = $(this).val();
+function ui_change_default_title_font_family() {
+    card_options.default_title_font_family = $(this).val();
+    ui_render_selected_card();
+}
+
+function ui_change_default_title_font_size() {
+    card_options.default_title_font_size = $(this).val();
     ui_render_selected_card();
 }
 
@@ -523,8 +530,13 @@ function ui_change_default_icon_size() {
     ui_render_selected_card();
 }
 
-function ui_change_default_card_font_size() {
-    card_options.default_card_font_size = $(this).val();
+function ui_change_default_body_font_family() {
+    card_options.default_body_font_family = $(this).val();
+    ui_render_selected_card();
+}
+
+function ui_change_default_body_font_size() {
+    card_options.default_body_font_size = $(this).val();
     ui_render_selected_card();
 }
 
@@ -569,22 +581,40 @@ function ui_apply_default_color() {
     for (var i = 0; i < card_data.length; ++i) {
         card_data[i].color = card_options.default_color;
     }
+    $('#card-color').val(card_options.default_color);
+    $(".dropdown-colorselector .btn-colorselector").css("background-color", card_options.default_color);
     ui_render_selected_card();
 }
 
-function ui_apply_default_font_title() {
+function ui_apply_default_title_font_family() {
     for (var i = 0; i < card_data.length; ++i) {
-        card_data[i].title_size = card_options.default_title_size;
+        card_data[i].title_font_family = card_options.default_title_font_family;
     }
-    $('#card-title-size').val(card_options.default_title_size);
+    $('#card-title-font-family').val(card_options.default_title_font_family);
     ui_render_selected_card();
 }
 
-function ui_apply_default_font_card() {
+function ui_apply_default_title_font_size() {
     for (var i = 0; i < card_data.length; ++i) {
-        card_data[i].card_font_size = card_options.default_card_font_size;
+        card_data[i].title_font_size = card_options.default_title_font_size;
     }
-    $('#card-font-size').val(card_options.default_card_font_size);
+    $('#card-title-font-size').val(card_options.default_title_font_size);
+    ui_render_selected_card();
+}
+
+function ui_apply_default_body_font_family() {
+    for (var i = 0; i < card_data.length; ++i) {
+        card_data[i].body_font_family = card_options.default_body_font_family;
+    }
+    $('#card-body-font-family').val(card_options.default_body_font_family);
+    ui_render_selected_card();
+}
+
+function ui_apply_default_body_font_size() {
+    for (var i = 0; i < card_data.length; ++i) {
+        card_data[i].body_font_size = card_options.default_body_font_size;
+    }
+    $('#card-body-font-size').val(card_options.default_body_font_size);
     ui_render_selected_card();
 }
 
@@ -664,16 +694,20 @@ $(document).ready(function () {
     $("#button-delete-card").click(ui_delete_card);
     $("#button-help").click(ui_open_help);
     $("#button-apply-default-color").click(ui_apply_default_color);
-    $("#button-apply-default-font-title").click(ui_apply_default_font_title);
-    $("#button-apply-default-font-card").click(ui_apply_default_font_card);
+    $("#button-apply-default-title-font-family").click(ui_apply_default_title_font_family);
+    $("#button-apply-default-title-font-size").click(ui_apply_default_title_font_size);
+    $("#button-apply-default-body-font-family").click(ui_apply_default_body_font_family);
+    $("#button-apply-default-body-font-size").click(ui_apply_default_body_font_size);
     $("#button-apply-default-icon-front").click(ui_apply_default_icon_front);
     $("#button-apply-default-icon-back").click(ui_apply_default_icon_back);
 
     $("#selected-card").change(ui_update_selected_card);
 
     $("#card-title").change(ui_change_card_title);
-    $("#card-title-size").change(ui_change_card_property);
-    $("#card-font-size").change(ui_change_card_property);
+    $("#card-title-font-family").change(ui_change_card_property);
+    $("#card-title-font-size").change(ui_change_card_property);
+    $("#card-body-font-family").change(ui_change_card_property);
+    $("#card-body-font-size").change(ui_change_card_property);
     $("#card-icon").change(ui_change_card_property);
     $("#card-count").change(ui_change_card_property);
     $("#card-icon-back").change(ui_change_card_property);
@@ -703,8 +737,10 @@ $(document).ready(function () {
     $("#default-color").change(ui_change_default_color);
     $("#default-icon-front").change(ui_change_default_icon_front);
     $("#default-icon-back").change(ui_change_default_icon_back);
-    $("#default-title-size").change(ui_change_default_title_size);
-    $("#default-card-font-size").change(ui_change_default_card_font_size);
+    $("#default-title-font-family").change(ui_change_default_title_font_family);
+    $("#default-title-font-size").change(ui_change_default_title_font_size);
+    $("#default-body-font-family").change(ui_change_default_body_font_family);
+    $("#default-body-font-size").change(ui_change_default_body_font_size);
     $("#small-icons").change(ui_change_default_icon_size);
 
     $(".icon-select-button").click(ui_select_icon);

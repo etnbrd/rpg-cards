@@ -3,13 +3,13 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    font-family: "EB Garamond", 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
-    font-size: 8pt;
+    font-family: var(--body-font-family);
+    font-size: var(--body-font-size);
     overflow: hidden;
 
     outline: 1px solid color-mix(in srgb, var(--card-color) 70%, black);
     box-shadow: 0 5px 10px 0 grey;
-    background: radial-gradient(circle at top center, var(--card-color), color-mix(in srgb, var(--card-color) 80%, black));
+    background: var(--card-background);
 }
 
 .card.rounded-corners {
@@ -86,7 +86,7 @@
 }
 
 .card-back-corner-icon {
-    font-family: 'Maghfirea';
+    font-family: var(--title-font-family);
     font-size: 44pt;
     color: white;
     position: absolute;

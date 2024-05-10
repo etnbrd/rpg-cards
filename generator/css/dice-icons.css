@@ -2,8 +2,10 @@ dice {
     font-family: 'dice-font';
     display: inline-block;
     vertical-align: middle;
-    font-size: 1.4em;
+    /* font-size: 2em; */
+    font-weight: 100;
     transform: translate(0, -.15em);
+    line-height: 0;
     /* margin-left: -.2em; */
     /* letter-spacing: -.5em; */
 }

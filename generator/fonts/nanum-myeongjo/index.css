@@ -1,0 +1,23 @@
+@font-face {
+	font-family: "Nanum Myeongio";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+	src: url("NanumMyeongio-ExtraBold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Nanum Myeongio";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+	src: url("NanumMyeongio-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Nanum Myeongio";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+	src: url("NanumMyeongio-Regular.ttf") format("truetype");
+}
