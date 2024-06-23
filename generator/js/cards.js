@@ -261,6 +261,16 @@ function card_element_text(params, card_data, options) {
     return result;
 }
 
+function card_element_text_dim(params, card_data, options) {
+    var element_class = card_element_class(card_data, options);
+
+    var result = "";
+    result += '<div class="' + element_class + '">';
+    result += '   <p class="card-p card-description-text-dim">' + params[0] + '</p>';
+    result += '</div>';
+    return result;
+}
+
 function card_element_center(params, card_data, options) {
     var element_class = card_element_class(card_data, options);
 
@@ -418,14 +428,10 @@ function card_element_swstats(params, card_data, options) {
     return result;
 }
 
-function card_element_bullet(params, card_data, options) {
-    var card_font_size_class = card_size_class(card_data, options);
-
-    var result = "";
-    result += '<ul class="card-element card-bullet-line' + card_font_size_class + '">';
-    result += '   <li class="card-bullet">' + params[0] + '</li>';
-    result += '</ul>';
-    return result;
+function card_element_bullets_array(params, card_data, options) {
+    const card_font_size_class = card_size_class(card_data, options);
+    const items = params.map(item => `<li class="card-bullet">${item}</li>`)
+    return `<ul class="card-element card-bullet-line ${card_font_size_class}">${items.join('')}</ul>`
 }
 
 function card_element_section(params, card_data, options) {
@@ -478,9 +484,10 @@ var card_element_generators = {
     p2e_activity: card_element_p2e_activity,
     swstats: card_element_swstats,
     text: card_element_text,
+    text_dim: card_element_text_dim,
     center: card_element_center,
     justify: card_element_justify,
-    bullet: card_element_bullet,
+    bullets_array: card_element_bullets_array,
     fill: card_element_fill,
     section: card_element_section,
     disabled: card_element_empty,
@@ -526,6 +533,15 @@ function get_card_elements(contents) {
                 last_pushed_element.element_params.push(element_params);
             } else {
                 content_elements.push({element_name: 'property_inline_array', element_params: [element_params]});
+            }
+        } else
+        // gather all subsequent bullet elements together in a bullets_array
+        if (element_name === 'bullet') {
+            const last_pushed_element = content_elements.at(-1)
+            if (last_pushed_element?.element_name === 'bullets_array') {
+                last_pushed_element.element_params.push(element_params);
+            } else {
+                content_elements.push({element_name: 'bullets_array', element_params: [element_params]});
             }
         } else {
             content_elements.push({element_name, element_params});
@@ -612,10 +628,6 @@ function card_generate_color_style(color, options) {
     // return 'style="color:' + color + '; border-color:' + color + '; background-color:' + color + '"';
 }
 
-function card_generate_color_gradient_style(color, options) {
-    return 'style="background: radial-gradient(ellipse at center, white 20%, ' + color + ' 120%)"';
-}
-
 function add_size_to_style(style, width, height) {
     // style string example ----> `style="color:red;"`
     style = style.slice(0, -1) + ";" + "width:" + width + ";" + "height:" + height + ";" + style.slice(-1);
@@ -637,7 +649,7 @@ function card_generate_front(data, options) {
         body_font_family = options.default_body_font_family || 'EB Garamond',
         body_font_size = options.default_body_font_size || 12,
     } = data;
-    const id = `card-${title.replaceAll(/ /g, '-')}`
+    const id = `card-${title.replaceAll(/[ '\/()]/g, '-')}`
 
     const content = card_generate_contents(data.contents, data, options);
 
@@ -684,7 +696,7 @@ function card_generate_back(data, options) {
 
     const {title} = data
 
-    const id = `card-${title.replaceAll(/ /g, '-')}`
+    const id = `card-${title.replaceAll(/[ '\/()]/g, '-')}`
 
     var $tmpCardContainer = $('<div style="position:absolute;visibility:hidden;pointer-events:none;"></div>');
     var $tmpCard = $('<div id="'+id+'" class="card" ' + card_style + '><div class="card-back"><div class="card-back-inner"><div class="card-back-icon"></div></div></div></div>');
@@ -701,6 +713,7 @@ function card_generate_back(data, options) {
 	var url = data.background_image;
 	var background_style = "";
     var back_content = ""
+    var icon = card_data_icon_back(data, options);
 
     const spell_schools = [
         'abjuration',
@@ -719,14 +732,12 @@ function card_generate_back(data, options) {
 	{
 		background_style = 'style = "background-image: url(&quot;' + url + '&quot;); background-size: contain; background-position: center; background-repeat: no-repeat;"';
 	}
-	else
+	else if (icon)
 	{
-		background_style = card_generate_color_gradient_style(color, options);
 		back_content += '    <div class="card-back-inner">';
 		back_content += '      <div class="card-back-icon icon-' + icon + '" ' + icon_style + '></div>';
 		back_content += '    </div>';
     }
-	var icon = card_data_icon_back(data, options);
 
     var result = "";
     result += '<div id="'+id+'" class="card' + ' ' + (options.rounded_corners ? 'rounded-corners' : '') + '" ' + card_style + '>';

@@ -19,11 +19,11 @@
 
 .card-header, .card-content-container {
     padding-top: 4mm;
+    padding-bottom: 2mm;
 }
 
 .card-header + .card-content-container {
     margin-top: 0;
-    padding-top: 4mm;
 }
 
 .card-header {
@@ -63,10 +63,6 @@
 }
 
 .card-back-inner {
-    margin: 3mm;
-    border: 1mm solid;
-    border-color: inherit;
-    border-radius: 4mm;
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -78,9 +74,6 @@
 .card-back-icon {
     width: 1in;
     height: 1in;
-    border: 4mm solid;
-    border-color: inherit;
-    border-radius: 4mm;
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -121,6 +114,7 @@
 
 .card-subtitle {
     font-size: var(--subtitle-font-size);
+    font-family: var(--title-font-family);
 }
 
 .card-title > *, .card-subtitle > * {
@@ -223,7 +217,8 @@
 .card-section h3 {
     color: var(--card-color);
     border-bottom: .3px solid var(--card-color);
-    font-size: 1.3em;
+    font-size: 1em;
+    font-family: var(--title-font-family);
     font-variant: small-caps;
     font-weight: normal;
     letter-spacing: 1px;
@@ -267,14 +262,22 @@ margin-top: 0.5em;
     display: inline;
 }
 
+.card-description-text-dim {
+    display: inline;
+    opacity: 0.5;
+}
+
 .card-ruler-container {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin: 1em 0 0;
+}
+
+.card-header .card-ruler-container {
     background: linear-gradient(var(--card-color), var(--card-color));
     background-size: 100% 10px;
-    padding: 1em 0;
 }
 
 .card-ruler {
